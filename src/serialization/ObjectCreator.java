@@ -53,7 +53,6 @@ public class ObjectCreator {
 	}
 	
 	public static void SimpleObject(){
-		//Object obj = new Object();
 		System.out.println("in s");
 	}
 	
