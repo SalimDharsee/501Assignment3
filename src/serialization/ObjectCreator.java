@@ -46,6 +46,8 @@ public class ObjectCreator {
 			default:
 				System.out.println("invalid input");
 			}
+			
+			System.out.println("");
 		}
 		
 	}
