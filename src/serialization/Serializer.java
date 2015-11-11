@@ -1,0 +1,12 @@
+package serialization;
+
+import java.io.*;
+import java.util.*;
+
+public class Serializer {
+	
+
+		
+
+
+}
