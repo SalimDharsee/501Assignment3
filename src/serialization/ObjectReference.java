@@ -1,5 +1,11 @@
 package serialization;
 
-public class ObjectReference {
+import java.io.Serializable;
+
+public class ObjectReference implements Serializable {
+	
+	public ObjectReference(){
+		
+	}
 
 }

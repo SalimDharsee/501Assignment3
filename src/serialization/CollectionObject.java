@@ -1,5 +1,7 @@
 package serialization;
 
-public class CollectionObject {
+import java.io.Serializable;
+
+public class CollectionObject implements Serializable {
 
 }
