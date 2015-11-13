@@ -9,6 +9,10 @@ public class ArrayRefObject implements Serializable {
 	int numberTwo;
 	int numberThree;
 	
+	public ArrayRefObject(){
+		
+	}
+	
 	ArrayRefObject(int numberOne, int numberTwo, int numberThree){
 		
 		this.numberOne = numberOne;
@@ -19,6 +23,10 @@ public class ArrayRefObject implements Serializable {
 		refArray[1] = new SimpleObject(numberTwo);
 		refArray[2] = new SimpleObject(numberThree);
 		
+	}
+	
+	public SimpleObject[] getArray(){
+		return refArray;
 	}
 	
 	public String toString(){

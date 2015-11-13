@@ -9,6 +9,10 @@ public class PrimitiveObject implements Serializable {
 	int numberThree;
 	int[] numberArray = new int[3];
 	
+	public PrimitiveObject(){
+		
+	}
+	
 	public PrimitiveObject(int numberOne, int numberTwo, int numberThree){
 		
 		this.numberOne = numberOne;
@@ -19,6 +23,10 @@ public class PrimitiveObject implements Serializable {
 		numberArray[1] = this.numberTwo;
 		numberArray[2] = this.numberThree;
 		
+	}
+	
+	public int[] getArray(){
+		return numberArray;
 	}
 	
 	public String toString(){
