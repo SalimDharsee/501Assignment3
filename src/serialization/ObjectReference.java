@@ -19,6 +19,10 @@ public class ObjectReference implements Serializable {
 		
 	}
 	
+	public int getNumber(){
+		return someNumber;
+	}
+	
 	public String toString(){
 		return "Doubled + Incremented Number: " + someNumber;
 	}
