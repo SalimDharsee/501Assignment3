@@ -68,8 +68,6 @@ public class ObjectCreator {
 		input = in.nextInt();
 		
 		SimpleObject anObject = new SimpleObject(input);
-		System.out.println(anObject.toString());
-		
 		
 		demo.serialize(anObject);
 		
@@ -85,7 +83,7 @@ public class ObjectCreator {
 		input = in.nextInt();
 		
 		ObjectReference anObject = new ObjectReference(input);
-		System.out.println(anObject.toString());
+	
 
 	demo.serialize(anObject);
 		
@@ -106,7 +104,7 @@ public class ObjectCreator {
 		input3 = in.nextInt();
 		
 		PrimitiveObject anObject = new PrimitiveObject(input1, input2, input3);
-		System.out.println(anObject.toString());
+		
 		
 		demo.serialize(anObject);
 		
@@ -127,7 +125,6 @@ public class ObjectCreator {
 		input3 = in.nextInt();
 		
 		ArrayRefObject anObject = new ArrayRefObject(input1, input2, input3);
-		System.out.println(anObject.toString());
 		
 		demo.serialize(anObject);
 	}
@@ -147,9 +144,6 @@ public class ObjectCreator {
 		input3 = in.nextInt();
 		
 		CollectionObject anObject = new CollectionObject(input1, input2, input3);
-		System.out.print("Sorted List: ");
-		System.out.println(anObject.getList());
-		
 		demo.serialize(anObject);
 	
 		
