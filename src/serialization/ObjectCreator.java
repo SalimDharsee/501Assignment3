@@ -25,7 +25,7 @@ public class ObjectCreator {
 			System.out.println("Object with a reference to other (o)bjects (provide number to be double and incremented)");
 			System.out.println("Object with array of (p)rimitives (provide 3 numbers)");
 			System.out.println("Object with array of (r)efernces (provide 3 numbers which get incremented)");
-			System.out.println("Object using (c)ollection instance (provide 3 numbers which are added to a list, numbers are incremented and added to the list, then sorted in ascedning order)");
+			System.out.println("Object using (c)ollection instance (provide 3 numbers which are added to a list, list is sorted in ascending order)");
 			System.out.print("INPUT: ");
 			input = in.nextLine();
 		
@@ -47,7 +47,8 @@ public class ObjectCreator {
 				break;
 			case("d"):
 				done = true;
-				System.out.println("Program Done");
+				//ClientEmulator aClient = new ClientEmulator();
+				//aClient.transfer("192.168.1.11", "12345", "src//serialization//sero.xml");
 				break;
 			default:
 				System.out.println("invalid input");
@@ -70,7 +71,7 @@ public class ObjectCreator {
 		System.out.println(anObject.toString());
 		
 		
-		System.out.println(demo.serialize(anObject));
+		demo.serialize(anObject);
 		
 		
 	}
@@ -86,7 +87,7 @@ public class ObjectCreator {
 		ObjectReference anObject = new ObjectReference(input);
 		System.out.println(anObject.toString());
 
-		System.out.println(demo.serialize(anObject));
+	demo.serialize(anObject);
 		
 	}
 	
@@ -107,7 +108,7 @@ public class ObjectCreator {
 		PrimitiveObject anObject = new PrimitiveObject(input1, input2, input3);
 		System.out.println(anObject.toString());
 		
-		System.out.println(demo.serialize(anObject));
+		demo.serialize(anObject);
 		
 	}
 	
@@ -128,7 +129,7 @@ public class ObjectCreator {
 		ArrayRefObject anObject = new ArrayRefObject(input1, input2, input3);
 		System.out.println(anObject.toString());
 		
-		System.out.println(demo.serialize(anObject));
+		demo.serialize(anObject);
 	}
 	
 	public static void ObjectColl(){
@@ -149,7 +150,7 @@ public class ObjectCreator {
 		System.out.print("Sorted List: ");
 		System.out.println(anObject.getList());
 		
-		System.out.println(demo.serialize(anObject));
+		demo.serialize(anObject);
 	
 		
 	}
