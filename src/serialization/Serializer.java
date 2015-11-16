@@ -20,8 +20,8 @@ import org.jdom.output.XMLOutputter;
  */
 public class Serializer {
 	
-	Element serialized = new Element("serialized");
-	Document doc = new Document(serialized);
+	static Element serialized = new Element("serialized");
+	static Document doc = new Document(serialized);
 	
 	public org.jdom.Document serialize(Object obj)  {
 		
@@ -57,6 +57,7 @@ public class Serializer {
 	private void createXML() {
 		XMLOutputter xmlOutput = new XMLOutputter();
 		try {
+			
 			xmlOutput.output(doc, new FileWriter("src//serialization//sero.xml"));
 		} catch (IOException e) {
 			

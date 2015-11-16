@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package deserialization;
+package serialization;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -32,8 +32,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- *
- * @author DigitalEye
+ * Salim Dharsee: 10062458
+ * NOTE: I DO NOT TAKE CREDIT FOR CODE THAT WAS WRITTEN IN THIS CLASS
+ * THIS CODE WAS TAKEN FROM AN ONLINE RESOURCE AND ARRANGED TO WORK AS INTENDED FOR THE ASSIGNMENT SPECIFICATION
  */
 public class SocketServerMonitor {
 
@@ -43,21 +44,7 @@ public class SocketServerMonitor {
     //Client socket
     private Socket _clientSocket = null;
 
-    /**
-     * List of client commands
-     */
-    private ArrayList<Runnable> _workQueue = null;
 
-    /**
-     * Date Time formatter
-     */
-    private final SimpleDateFormat _dateTimeFormatter
-            = new SimpleDateFormat("YYYY/MM/DD HH:mm:ss");
-
-    /**
-     * Singleton Implementation: In the context of this app, only one instance
-     * of SocketServerMonitor makes sense
-     */
     private static SocketServerMonitor _singletonInstance = null;
 
     /**
@@ -116,58 +103,6 @@ public class SocketServerMonitor {
         }
     }
 
-    /**
-     * Adds a client command to work queue
-     *
-     * @param commandNode Node corresponding to XML element Command
-     */
-    private void addToWorkQueue(final Node commandNode) {
-        if (_workQueue == null) {
-            _workQueue = new ArrayList<>();
-        }
-        _workQueue.add(new Runnable() {
-
-            @Override
-            public void run() {
-                System.out.println(((Element) commandNode).getTextContent() + " " + _dateTimeFormatter.format(new Date()));
-            }
-        });
-    }
-
-    /**
-     * Executes queued client commands. The execution is started in a new thread
-     * so the callee thread isn't blocked until commands are executed. Each
-     * command is executed in a separate thread and the commands are guaranteed
-     * to be executed in the order in which they were received by the server
-     */
-    /*private void processCommandQueue() {
-     if (_workQueue != null) {
-
-     new Thread(new Runnable() {
-
-     @Override
-     public void run() {
-     try {
-     for (Runnable work : _workQueue) {
-     Thread workerThread = new Thread(work);
-     workerThread.start();
-     workerThread.join();
-     }
-     } catch (InterruptedException ex){
-     System.out.println("Error: Unable to process commands!\n\t" + ex);
-     } finally {
-     _workQueue.clear();
-     }
-     }
-
-     }).start();            
-     }
-     }   */
-    /**
-     * Read a string from the client that contains a XML document hierarchy
-     *
-     * @return Document Parsed XML document
-     */
     private Document acceptXMLFromClient() {
         Document xmlDoc = null;
         try {
@@ -204,18 +139,7 @@ public class SocketServerMonitor {
         while (true) {
             // Read xml from client
             Document xmlDoc = acceptXMLFromClient();
-            if (xmlDoc != null) {
-                // Send receipt notice to client  
-                if (pw != null) {
-                    pw.println("Message Received " + _dateTimeFormatter.format(new Date()));
-                }
-                NodeList messageNodes = xmlDoc.getElementsByTagName("Command");
-                for (int i = 0; i < messageNodes.getLength(); i++) {
-                    addToWorkQueue(messageNodes.item(i));
-                }
-            } else {
-                System.out.println("Unknown Message Received at " + _dateTimeFormatter.format(new Date()));
-            }
+
             DOMBuilder builder = new DOMBuilder();
             org.jdom.Document myDoc = builder.build(xmlDoc);
             try {
@@ -225,10 +149,9 @@ public class SocketServerMonitor {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-
-            //processCommandQueue();
             stop();
             System.exit(0);
+            
         }
     }
 
@@ -237,9 +160,10 @@ public class SocketServerMonitor {
      */
     public static void main(final String[] args) {
         // Make sure command line arguments are valid
+  
         try {
-            InetSocketAddress test = new InetSocketAddress(12345);
-            getSingleSocketServerMonitor().start(new InetSocketAddress("192.168.1.11", Integer.parseInt("12345")));
+            InetSocketAddress test = new InetSocketAddress(1232);
+            getSingleSocketServerMonitor().start(new InetSocketAddress("192.168.1.41", 12345));
             getSingleSocketServerMonitor().listenToClient();
         } catch (NumberFormatException ex) {
             System.out.println(ex);

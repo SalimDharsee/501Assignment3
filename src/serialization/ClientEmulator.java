@@ -9,8 +9,9 @@ import java.net.Socket;
 
 
 /**
- *
- * @author DigitalEye
+ * Salim Dharsee: 10062458
+ * NOTE: I DO NOT TAKE CREDIT FOR CODE THAT WAS WRITTEN IN THIS CLASS
+ * THIS CODE WAS TAKEN FROM AN ONLINE RESOURCE AND ARRANGED TO WORK AS INTENDED FOR THE ASSIGNMENT SPECIFICATION
  */
 public class ClientEmulator {
 
