@@ -5,7 +5,11 @@ import java.util.Scanner;
 
 public class ObjectCreator {
 	
-	
+	/*
+	 * This class is repsonsible for creating the objects and passing them to be serealized once they are 
+	 * created. Each object class has its own method that is called when created. 
+	 * Their constructor will either take 1 or 3 arguments based on the object type.
+	 */
 	
 	public static void main (String [] args){
 		
