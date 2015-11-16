@@ -56,65 +56,58 @@ public class Serializer {
 
 
 	private void serializeObjCol(Object obj) {
-		Element objectCol = new Element ("Object");
-		int hash = obj.hashCode();
-		String sHash = hash + "";
-		objectCol.setAttribute(new Attribute("class",obj.getClass().getSimpleName()));
-		objectCol.setAttribute(new Attribute("ID", sHash));
+		Element object = elementCreation(obj);
 		Field[] aField = obj.getClass().getDeclaredFields();
 		
 
 		for(int i = 0; i < aField.length; i++){
 			
-			Element field = new Element("Field");
-			field.setAttribute(new Attribute("name", aField[i].getName()));
-			field.setAttribute("declaringclass",aField[i].getDeclaringClass().getSimpleName());
+			Element field = fieldCreation(aField, i);
 			try {
-				Element value = new Element("value");
-				Object objValue = aField[i].get(obj);
-				value.addContent(objValue.toString());
-				field.addContent(value);
+				elementValue(obj, aField, i, field);
 				
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 			
 				System.out.println("Error has occured");
 			} 
-			objectCol.addContent(field);
+			object.addContent(field);
 		}
 
 
-		doc.getRootElement().addContent(objectCol);
+		doc.getRootElement().addContent(object);
+	}
+
+
+	private Element elementCreation(Object obj) {
+		Element object = new Element ("Object");
+		int hash = obj.hashCode();
+		String sHash = hash + "";
+		object.setAttribute(new Attribute("class",obj.getClass().getSimpleName()));
+		object.setAttribute(new Attribute("ID", sHash));
+		return object;
 	}
 
 
 	private void serializeArrayRef(Object obj) {
-		Element objectAr = new Element ("Object");
-		int hash = obj.hashCode();
-		String sHash = hash + "";
+		
+		Element object = elementCreation(obj);
 		Element arrayObj = null;
-		objectAr.setAttribute(new Attribute("class",obj.getClass().getSimpleName()));
-		objectAr.setAttribute(new Attribute("ID", sHash));
 		Field[] aField = obj.getClass().getDeclaredFields();
 		
 		
 
 		for(int i = 0; i < aField.length; i++){
 			if(aField[i].getType().isArray() == false){
-				Element field = new Element("Field");
-				field.setAttribute(new Attribute("name", aField[i].getName()));
-				field.setAttribute("declaringclass",aField[i].getDeclaringClass().getSimpleName());
+				Element field = fieldCreation(aField, i);
 				//Element value = field.addContent(new Element("value"));
 				try {
-					Element value = new Element("value");
-					Object objValue = aField[i].get(obj);
-					value.addContent(objValue.toString());
-					field.addContent(value);
+					elementValue(obj, aField, i, field);
 					
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 				
 					System.out.println("Error has occured");
 				} 
-				objectAr.addContent(field);
+				object.addContent(field);
 			} else{
 				arrayObj = new Element("Object");
 				arrayObj.setAttribute("class", aField[i].getDeclaringClass().getSimpleName());
@@ -141,20 +134,16 @@ public class Serializer {
 			}
 		}
 		doc.getRootElement().addContent(arrayObj);	
-		doc.getRootElement().addContent(objectAr);
+		doc.getRootElement().addContent(object);
 	}
 
 
 	private void serializeObjPrim(Object obj) {
-		Element objectPrim = new Element ("Object");
+		
+		Element object = elementCreation(obj);
 		Element arrayObj = null;
-		int hash = obj.hashCode();
-		String sHash = hash + "";
-		objectPrim.setAttribute(new Attribute("class",obj.getClass().getSimpleName()));
-		objectPrim.setAttribute(new Attribute("ID", sHash));
 		Field[] aField = obj.getClass().getDeclaredFields();
 		Element field = null;
-		Element value = new Element("value");
 
 		for(int i = 0; i < aField.length; i++){
 			if(aField[i].getType().isArray() == false){
@@ -162,16 +151,13 @@ public class Serializer {
 				field.setAttribute(new Attribute("name", aField[i].getName()));
 				field.setAttribute("declaringclass",aField[i].getDeclaringClass().getSimpleName());
 				try {
-					value = new Element("value");
-					Object objValue = aField[i].get(obj);
-					value.addContent(objValue.toString());
-					field.addContent(value);
+					elementValue(obj, aField, i, field);
 					
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 				
 					System.out.println("Error has occured");
 				} 
-				objectPrim.addContent(field);
+				object.addContent(field);
 			}else{
 				arrayObj = new Element("Object");
 				arrayObj.setAttribute("class", aField[i].getDeclaringClass().getSimpleName());
@@ -197,19 +183,14 @@ public class Serializer {
 				}
 			}
 		}
-		doc.getRootElement().addContent(objectPrim);
+		doc.getRootElement().addContent(object);
 		doc.getRootElement().addContent(arrayObj);
 	}
 
 
 	private void serializeObjRef(Object obj) {
-		Element objectRef = new Element ("Object");
-		int hash = obj.hashCode();
-		String sHash = hash + "";
-		objectRef.setAttribute(new Attribute("class",obj.getClass().getSimpleName()));
-		objectRef.setAttribute(new Attribute("ID", sHash));
+		Element object = elementCreation(obj);
 		Field[] aField = obj.getClass().getDeclaredFields();
-		Element value = null;
 		Element field = new Element("Field");
 		Element afield = new Element("Field");
 
@@ -219,16 +200,13 @@ public class Serializer {
 				field.setAttribute(new Attribute("name", aField[i].getName()));
 				field.setAttribute("declaringclass",aField[i].getDeclaringClass().getSimpleName());
 				try {
-					value = new Element("value");
-					Object objValue = aField[i].get(obj);
-					value.addContent(objValue.toString());
-					field.addContent(value);
+					elementValue(obj, aField, i, field);
 					
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 				
 					System.out.println("Error has occured");
 				} 
-				objectRef.addContent(field);
+				object.addContent(field);
 			}
 			else{
 				afield = new Element("Field");
@@ -236,50 +214,46 @@ public class Serializer {
 				afield.setAttribute("declaringclass",aField[i].getDeclaringClass().getSimpleName());
 				Element reference = new Element("reference");
 				reference.addContent(String.valueOf(aField[i].hashCode()));
-				afield.addContent(reference);
-				
+				afield.addContent(reference);	
 			}
 		}
 
 		doc.getRootElement().addContent(afield);
-		doc.getRootElement().addContent(objectRef);
+		doc.getRootElement().addContent(object);
 	}
 
-
 	private void serializeSimple(Object obj) {
-		Element object = new Element ("Object");
-		object.setAttribute(new Attribute("class",obj.getClass().getSimpleName()));
-		int hash = obj.hashCode();
-		String sHash = hash + "";
-		object.setAttribute(new Attribute("ID", sHash ));
+		Element object = elementCreation(obj);
 		Field[] aField = obj.getClass().getDeclaredFields();
 		
 
 		for(int i = 0; i < aField.length; i++){
 			
-			Element field = new Element("Field");
-			field.setAttribute(new Attribute("name", aField[i].getName()));
-			field.setAttribute("declaringclass",aField[i].getDeclaringClass().getSimpleName());
-			
-
+			Element field = fieldCreation(aField, i);
 			try {
-				Element value = new Element("value");
-				Object objValue = aField[i].get(obj);
-				value.addContent(objValue.toString());
-				field.addContent(value);
+				elementValue(obj, aField, i, field);
 				
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 			
 				System.out.println("Error has occured");
 			} 
-			
 			object.addContent(field);
-			
 		}
-
-		
 		doc.getRootElement().addContent(object);
 	}
 
+	private Element fieldCreation(Field[] aField, int i) {
+		Element field = new Element("Field");
+		field.setAttribute(new Attribute("name", aField[i].getName()));
+		field.setAttribute("declaringclass",aField[i].getDeclaringClass().getSimpleName());
+		return field;
+	}
 
+	private void elementValue(Object obj, Field[] aField, int i, Element field)
+			throws IllegalAccessException {
+			Element value = new Element("value");
+			Object objValue = aField[i].get(obj);
+			value.addContent(objValue.toString());
+			field.addContent(value);
+	}
 }
