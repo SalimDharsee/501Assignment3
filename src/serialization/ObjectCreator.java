@@ -47,8 +47,8 @@ public class ObjectCreator {
 				break;
 			case("d"):
 				done = true;
-				//ClientEmulator aClient = new ClientEmulator();
-				//aClient.transfer("192.168.1.11", "12345", "src//serialization//sero.xml");
+				ClientEmulator aClient = new ClientEmulator();
+				aClient.transfer("192.168.1.41", "1232", "src//serialization//sero.xml");
 				break;
 			default:
 				System.out.println("invalid input");

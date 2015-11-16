@@ -134,7 +134,40 @@ public class SocketServerMonitor {
         });
     }
 
+    /**
+     * Executes queued client commands. The execution is started in a new thread
+     * so the callee thread isn't blocked until commands are executed. Each
+     * command is executed in a separate thread and the commands are guaranteed
+     * to be executed in the order in which they were received by the server
+     */
+    /*private void processCommandQueue() {
+     if (_workQueue != null) {
 
+     new Thread(new Runnable() {
+
+     @Override
+     public void run() {
+     try {
+     for (Runnable work : _workQueue) {
+     Thread workerThread = new Thread(work);
+     workerThread.start();
+     workerThread.join();
+     }
+     } catch (InterruptedException ex){
+     System.out.println("Error: Unable to process commands!\n\t" + ex);
+     } finally {
+     _workQueue.clear();
+     }
+     }
+
+     }).start();            
+     }
+     }   */
+    /**
+     * Read a string from the client that contains a XML document hierarchy
+     *
+     * @return Document Parsed XML document
+     */
     private Document acceptXMLFromClient() {
         Document xmlDoc = null;
         try {
@@ -204,11 +237,6 @@ public class SocketServerMonitor {
      */
     public static void main(final String[] args) {
         // Make sure command line arguments are valid
-        //if (args.length < 2) {
-       //     System.out.println("Error: Please specify host name and port number.\nExiting...");
-        //    return;
-      //  }
-
         try {
             InetSocketAddress test = new InetSocketAddress(12345);
             getSingleSocketServerMonitor().start(new InetSocketAddress("192.168.1.11", Integer.parseInt("12345")));
